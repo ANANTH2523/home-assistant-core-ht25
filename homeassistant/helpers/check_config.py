@@ -97,7 +97,7 @@ async def async_check_ha_config_file(  # noqa: C901
         hass: HomeAssistant,
         package: str,
         component: str | None,
-        config: ConfigType,
+        config: dict,
         message: str,
     ) -> None:
         """Handle errors from packages."""
@@ -142,10 +142,10 @@ async def async_check_ha_config_file(  # noqa: C901
 
     # Load configuration.yaml
     config_path = hass.config.path(YAML_CONFIG_FILE)
-    try:
-        if not await hass.async_add_executor_job(os.path.isfile, config_path):
-            return result.add_error("File configuration.yaml not found.")
+    if not await hass.async_add_executor_job(os.path.isfile, config_path):
+        return result.add_error("File configuration.yaml not found.")
 
+    try:
         config = await hass.async_add_executor_job(
             load_yaml_config_file,
             config_path,
