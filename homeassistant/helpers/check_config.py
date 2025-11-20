@@ -85,7 +85,7 @@ class HomeAssistantConfig(OrderedDict):
         return "\n".join([err.message for err in self.warnings])
 
 
-async def async_check_ha_config_file(  # noqa: C901, PLR0912, PLR0915
+async def async_check_ha_config_file(  # noqa: C901
     hass: HomeAssistant,
 ) -> HomeAssistantConfig:
     """Load and check if Home Assistant configuration file is valid.
@@ -96,7 +96,7 @@ async def async_check_ha_config_file(  # noqa: C901, PLR0912, PLR0915
     async_clear_install_history(hass)
 
     def _pack_error(
-        hass: HomeAssistant,  # noqa: ARG001
+        hass: HomeAssistant,
         package: str,
         component: str | None,
         config: dict,
