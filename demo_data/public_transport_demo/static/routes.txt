@@ -1,0 +1,10 @@
+route_id,agency_id,route_short_name,route_long_name,route_desc,route_type,route_url,route_color,route_text_color
+R1,BLEKINGE,1,Karlskrona Central - Salto,City bus line 1,3,,,#000000
+R2,BLEKINGE,2,Karlskrona Central - Jamjo,City bus line 2,3,,,#000000
+R3,BLEKINGE,3,Karlskrona Central - Bastasjo,City bus line 3,3,,,#000000
+R4,BLEKINGE,4,Karlskrona Central - Rodeby,City bus line 4,3,,,#000000
+R5,BLEKINGE,5,Karlskrona Central - Nattraby,City bus line 5,3,,,#000000
+R6,BLEKINGE,6,Karlskrona Central - Verko,City bus line 6,3,,,#000000
+R7,BLEKINGE,7,Karlskrona Central - Lango,City bus line 7,3,,,#000000
+R8,BLEKINGE,8,Karlskrona Central - Hasto,City bus line 8,3,,,#000000
+T1,BLEKINGE,Train,Karlskrona Central - Karlshamn,Regional train,2,,,#000000

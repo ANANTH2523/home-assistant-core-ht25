@@ -1,0 +1,10 @@
+route_id,service_id,trip_id,trip_headsign,direction_id,shape_id
+R1,WKDY,R1_OUT,Salto,0,SHAPE_R1
+R2,WKDY,R2_OUT,Jamjo,0,SHAPE_R2
+R3,WKDY,R3_OUT,Bastasjo,0,SHAPE_R3
+R4,WKDY,R4_OUT,Rodebyholm,0,SHAPE_R4
+R5,WKDY,R5_OUT,Skarvik,0,SHAPE_R5
+R6,WKDY,R6_OUT,Verko Terminal,0,SHAPE_R6
+R7,WKDY,R7_OUT,Strandgatan,0,SHAPE_R7
+R8,WKDY,R8_OUT,Hasto,0,SHAPE_R8
+T1,WKDY,T1_OUT,Karlshamn,0,SHAPE_T1

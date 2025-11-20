@@ -1,0 +1,54 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Public transport (GTFS-RT)",
+        "description": "Connect to a GTFS-Realtime Trip Updates or Vehicle Positions feed to show upcoming departures for your selected stop identifiers.",
+        "data": {
+          "feed_url": "GTFS-RT feed URL",
+          "api_key_header_name": "API key header name (optional)",
+          "api_key_value": "API key value (optional)",
+          "stop_ids": "Stop identifiers (comma separated)",
+          "route_ids": "Restrict to route identifiers (optional)",
+          "max_departures": "Maximum departures to display",
+          "scan_interval": "Polling interval (seconds)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Could not reach the GTFS-RT feed. Check the URL and network connection.",
+      "invalid_payload": "The GTFS-RT feed responded with an invalid payload.",
+      "invalid_stop_ids": "Enter at least one valid stop identifier."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Public transport options",
+        "description": "Update the stops, routes, and polling behaviour.",
+        "data": {
+          "stop_ids": "Stop identifiers (comma separated)",
+          "route_ids": "Restrict to route identifiers (optional)",
+          "max_departures": "Maximum departures to display",
+          "scan_interval": "Polling interval (seconds)"
+        }
+      }
+    },
+    "error": {
+      "invalid_stop_ids": "Enter at least one valid stop identifier."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "next_departure_minutes": {
+        "name": "Next departure minutes ({stop_id})"
+      },
+      "next_departure_time": {
+        "name": "Next departure time ({stop_id})"
+      },
+      "departures_summary": {
+        "name": "Departure summary ({stop_id})"
+      }
+    }
+  }
+}

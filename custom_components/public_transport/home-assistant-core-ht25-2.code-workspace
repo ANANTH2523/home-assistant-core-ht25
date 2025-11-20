@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "../../../../home-assistant-core-ht25-2"
+		},
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../tests"
+		},
+		{
+			"path": "../../demo_data/public_transport_demo/static"
+		},
+		{
+			"path": "translations"
+		},
+		{
+			"path": "../../demo_data"
+		}
+	],
+	"settings": {}
+}
