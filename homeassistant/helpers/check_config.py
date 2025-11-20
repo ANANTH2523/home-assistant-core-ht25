@@ -6,7 +6,7 @@ from collections import OrderedDict
 import logging
 import os
 from pathlib import Path
-from typing import NamedTuple, Self
+from typing import TYPE_CHECKING, NamedTuple, Self
 
 from annotatedyaml import loader as yaml_loader
 import voluptuous as vol
@@ -32,7 +32,9 @@ from homeassistant.requirements import (
 )
 
 from . import config_validation as cv
-from .typing import ConfigType
+
+if TYPE_CHECKING:
+    from .typing import ConfigType
 
 
 class CheckConfigError(NamedTuple):
@@ -83,7 +85,7 @@ class HomeAssistantConfig(OrderedDict):
         return "\n".join([err.message for err in self.warnings])
 
 
-async def async_check_ha_config_file(  # noqa: C901
+async def async_check_ha_config_file(  # noqa: C901, PLR0912, PLR0915
     hass: HomeAssistant,
 ) -> HomeAssistantConfig:
     """Load and check if Home Assistant configuration file is valid.
@@ -94,7 +96,7 @@ async def async_check_ha_config_file(  # noqa: C901
     async_clear_install_history(hass)
 
     def _pack_error(
-        hass: HomeAssistant,
+        hass: HomeAssistant,  # noqa: ARG001
         package: str,
         component: str | None,
         config: dict,
@@ -102,7 +104,10 @@ async def async_check_ha_config_file(  # noqa: C901
     ) -> None:
         """Handle errors from packages."""
         message = f"Setup of package '{package}' failed: {message}"
-        domain = f"homeassistant.packages.{package}{'.' + component if component is not None else ''}"
+        domain = (
+            f"homeassistant.packages.{package}"
+            f"{'.' + component if component is not None else ''}"
+        )
         pack_config = core_config[CONF_PACKAGES].get(package, config)
         result.add_warning(message, domain, pack_config)
 
@@ -123,7 +128,8 @@ async def async_check_ha_config_file(  # noqa: C901
             result.add_warning(message, domain, config_to_attach)
 
     async def _get_integration(
-        hass: HomeAssistant, domain: str
+        hass: HomeAssistant,
+        domain: str,
     ) -> loader.Integration | None:
         """Get an integration."""
         integration: loader.Integration | None = None
@@ -164,7 +170,10 @@ async def async_check_ha_config_file(  # noqa: C901
 
         # Merge packages
         await merge_packages_config(
-            hass, config, core_config.get(CONF_PACKAGES, {}), _pack_error
+            hass,
+            config,
+            core_config.get(CONF_PACKAGES, {}),
+            _pack_error,
         )
     except vol.Invalid as err:
         result.add_error(
@@ -210,7 +219,8 @@ async def async_check_ha_config_file(  # noqa: C901
                     continue
 
         if config_validator is not None and hasattr(
-            config_validator, "async_validate_config"
+            config_validator,
+            "async_validate_config",
         ):
             try:
                 result[domain] = (
@@ -222,7 +232,7 @@ async def async_check_ha_config_file(  # noqa: C901
                 continue
             except Exception as err:
                 logging.getLogger(__name__).exception(
-                    "Unexpected error validating config"
+                    "Unexpected error validating config",
                 )
                 result.add_error(
                     f"Unexpected error calling config validator: {err}",
@@ -256,7 +266,9 @@ async def async_check_ha_config_file(  # noqa: C901
             # Validate component specific platform schema
             try:
                 p_validated = await cv.async_validate(
-                    hass, component_platform_schema, p_config
+                    hass,
+                    component_platform_schema,
+                    p_config,
                 )
             except vol.Invalid as ex:
                 _comp_error(ex, domain, p_config, p_config)
@@ -271,7 +283,8 @@ async def async_check_ha_config_file(  # noqa: C901
 
             try:
                 p_integration = await async_get_integration_with_requirements(
-                    hass, p_name
+                    hass,
+                    p_name,
                 )
                 platform = await p_integration.async_get_platform(domain)
             except loader.IntegrationNotFound as ex:
@@ -281,7 +294,7 @@ async def async_check_ha_config_file(  # noqa: C901
                 # not confuse the user.
                 if not hass.config.recovery_mode and not hass.config.safe_mode:
                     result.add_warning(
-                        f"Platform error '{domain}' from integration '{p_name}' - {ex}"
+                        f"Platform error '{domain}' from integration '{p_name}' - {ex}",
                     )
                 continue
             except (
@@ -289,7 +302,7 @@ async def async_check_ha_config_file(  # noqa: C901
                 ImportError,
             ) as ex:
                 result.add_warning(
-                    f"Platform error '{domain}' from integration '{p_name}' - {ex}"
+                    f"Platform error '{domain}' from integration '{p_name}' - {ex}",
                 )
                 continue
 
